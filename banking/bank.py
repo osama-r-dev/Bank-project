@@ -24,14 +24,14 @@ class Bank:
  
 
 
-  def addCustomer(self, firstName,lastName,password,checking_amount = None ,saving_amount = None):
+  def addCustomer(self, firstName,lastName,password,checking_amount = 0 ,saving_amount = 0):
     number = int(self.customers[len(self.customers)-1].account.id)
     number +=1
     id = number
-    newCustomer = Customer(firstName,lastName,Account(password,checking_amount))
+    newCustomer = Customer(firstName,lastName,Account(password,checking_amount,saving_amount))
     newCustomer.account.setID(id)
     self.customers.append(newCustomer) 
-    
+    return newCustomer
 
   def transferToDifferentCustomer(self,senderAccount,senderAccountType,transferAmount,recipientID):
          

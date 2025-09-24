@@ -4,8 +4,9 @@ from banking.bank import Bank
 myBank = Bank()
 myBank.loadData()
 
-account = myBank.customers[1].account
-account.deposit("checking",1000)
-account.withdraw("checking",1001)
-account.transferToDifferentAccountType("dfdf",1)
+account_suresh = myBank.customers[0].account
+account_james = myBank.customers[1].account
+ 
+myBank.transferToDifferentCustomer(account_suresh,"checking",1000,2)
 myBank.printCustomers()
+

@@ -16,7 +16,8 @@ class Bank:
     with open("banking/bank.csv",'r') as file:
       reader = csv.DictReader(file)
       for row in reader:
-        account = Account(int (row["account_id"]),row["password"],int (row["balance_checking"]),int(row["balance_savings"]))
+        account = Account(row["password"],int (row["balance_checking"]),int(row["balance_savings"]))
+        account.setID(int (row["account_id"]))
         customer = Customer(row["frst_name"],row["last_name"],account)
         self.customers.append(customer)
       return self.customers
@@ -27,7 +28,8 @@ class Bank:
     number = int(self.customers[len(self.customers)-1].account.id)
     number +=1
     id = number
-    newCustomer = Customer(firstName,lastName,Account(id,password,checking_amount))
+    newCustomer = Customer(firstName,lastName,Account(password,checking_amount))
+    newCustomer.account.setID(id)
     self.customers.append(newCustomer) 
     
 

@@ -7,8 +7,8 @@ class PasswordTooShort(Exception):
 
 class Account:
      
-     def __init__ (self,id, password ,balanceChecking = None ,balanceSavings = None ):
-        self.id = id
+     def __init__ (self, password ,balanceChecking = None ,balanceSavings = None ):
+        self.id = None
         self.password = self.qualifyPassword(password)
         self.balanceChecking = balanceChecking
         self.balanceSavings = balanceSavings
@@ -61,6 +61,9 @@ class Account:
            raise NotEnoughMoneyException("operation failed you don't have enough money in your account")      
         return True
 
+
+     def setID(self,id):
+        self.id = id
 
 def checkingAccount():
     pass

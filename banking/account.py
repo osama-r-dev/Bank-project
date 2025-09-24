@@ -8,7 +8,7 @@ class PasswordTooShort(Exception):
 class Account:
      number = 0
     
-     def __init__ (self,id, password ,balanceChecking = None,balanceSavings = None):
+     def __init__ (self,id, password ,balanceChecking = None ,balanceSavings = None ):
         self.id = id
         self.password = self.qualifyPassword(password)
         self.balanceChecking = balanceChecking
@@ -20,7 +20,6 @@ class Account:
         else:      
          return password
       
-
 
      def deposit(self,accountType,amount):
         if accountType == "checking":
@@ -42,10 +41,30 @@ class Account:
         else:
            if accountType == "checking":
             self.balanceChecking -= amount
+            return True
            else:
               self.balanceSavings -= amount
+              return True
 
 
+     def transferToDifferentAccountType(self,accountType,transferAmount):
+          if accountType == "checking":
+               balance = self.balanceChecking
+          elif accountType == "saving":
+               balance = self.balanceSavings
+          else:
+               raise ValueError("invaild account")
+          if balance < transferAmount:
+             raise NotEnoughMoneyException("operation failed you don't have enough money in your account")
+          if accountType == "checking":
+             self.balanceChecking -= transferAmount
+             self.balanceSavings += transferAmount
+          else:
+             self.balanceSavings -= transferAmount
+             self.balanceChecking += transferAmount
+             return True
+     def transferToDifferentCustomer(customerAccountType,trnasferAmount):
+        pass
 
 def checkingAccount():
     pass

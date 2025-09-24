@@ -6,37 +6,36 @@ class CustmerAlreadyExist(Exception):
    pass
 
 class Bank:    
- number = 0
- def __init__(self):
-  pass
-          
-        
-    
-    
-def addCustomer(self, firstName,lastName,password,accountType):
-        Bank.number +=1
-        id ="1000"+ str(Bank.number )
-        with open('banking/bank.csv','r') as file:
-              reader = csv.DictReader(file)
-              for row in reader:
-                   if row.get("account_id") == id:
-                    raise CustmerAlreadyExist("Customer already exist")
-                    
-                   else:
-                    newCustomer = Customer(firstName,lastName,Account(id,password))
-                    StoreData(newCustomer,accountType)
+  
+  customers = []
 
 
-def StoreData(customer, accountType):
-   pass
-                 
-                   
-
+  def loadData(self):
+    with open("banking/bank.csv",'r') as file:
+      reader = csv.DictReader(file)
+      for row in reader:
+        account = Account(row["account_id"],row["password"],row["balance_checking"],row["balance_savings"])
+        customer = Customer(row["frst_name"],row["last_name"],account)
+        self.customers.append(customer)
+      return self.customers
  
-      
 
 
-
-
-
+  def addCustomer(self, firstName,lastName,password,checking_amount = None ,saving_amount = None):
+    number = int(self.customers[len(self.customers)-1].account.id)
+    number +=1
+    id = number
+    newCustomer = Customer(firstName,lastName,Account(id,password,checking_amount))
+    self.customers.append(newCustomer) 
+    
  
+  def printCustomers(self):
+     for cust in self.customers:
+      print(cust.account.id,cust.firstName,cust.lastName,cust.account.password,cust.account.balanceChecking,cust.account.balanceSavings)
+
+
+
+bank = Bank()
+bank.loadData()
+bank.addCustomer("osama","alrehaili","das333fa",333)
+bank.printCustomers()

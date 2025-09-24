@@ -8,9 +8,9 @@ class InvalidCharacterException(Exception):
 class Customer:
      
      def __init__ (self,firstName,lastName,account):
-        self.id = id
+
         self.firstName = self.qualifyName(firstName)
-        self.lastname =  self.qualifyName(lastName)
+        self.lastName =  self.qualifyName(lastName)
         self.account = account
        
 

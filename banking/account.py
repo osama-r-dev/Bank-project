@@ -1,35 +1,55 @@
 
 
-
+class NotEnoughMoneyException(Exception):
+   pass
 class PasswordTooShort(Exception):
      pass
 
 class Account:
      number = 0
     
-     def __init__ (self,id, password):
+     def __init__ (self,id, password ,balanceChecking = None,balanceSavings = None):
         self.id = id
         self.password = self.qualifyPassword(password)
-        self.balanceChecking = None
-        self.savingsAccount = None
+        self.balanceChecking = balanceChecking
+        self.balanceSavings = balanceSavings
 
-   
-
-
-class SavingsAccount(Account):
-        def __init__( self, firstName,lastName,password):
-            super().__init__(id, firstName, lastName,password)
-           
-
- 
-def qualifyPassword(self,password):
+     def qualifyPassword(self,password):
         if len(password) < 8:
          raise PasswordTooShort("Too short password") 
         else:      
          return password
       
-def setCheckingAccount():
+
+
+     def deposit(self,accountType,amount):
+        if accountType == "checking":
+           self.balanceChecking += amount
+        elif accountType == "saving":
+           self.balanceSavings += amount
+        else:
+           raise ValueError("invalid account")
+        
+     def withdraw(self,accountType,amount):
+        if accountType == "checking":
+           balance = self.balanceChecking
+        elif accountType == "saving":
+            balance = self.balanceSavings
+        else:
+           raise ValueError("invaild account")
+        if balance < amount:
+           raise NotEnoughMoneyException("opration failed you don't have enough maoney in your account")
+        else:
+           if accountType == "checking":
+            self.balanceChecking -= amount
+           else:
+              self.balanceSavings -= amount
+
+
+
+def checkingAccount():
     pass
 
-def setSavingAccount():
+def savingAccount():
     pass
+

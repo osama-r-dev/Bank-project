@@ -23,19 +23,21 @@ class Account:
      def deposit(self,accountType,amount):
         if accountType == "checking":
            self.balanceChecking += amount
+           return self.balanceChecking
         elif accountType == "saving":
            self.balanceSavings += amount
+           return self.balanceSavings
         else:
            raise ValueError("invalid account")
-        
+    
      def withdraw(self,accountType,amount):
         if self.checkAccount(accountType,amount) == True:
            if accountType == "checking":
             self.balanceChecking -= amount
-            return True
+            return self.balanceChecking
            else:
               self.balanceSavings -= amount
-              return True
+              return self.balanceSavings
 
 
      def transferToDifferentAccountType(self,accountType,transferAmount):

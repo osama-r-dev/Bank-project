@@ -8,9 +8,8 @@ class CustmerAlreadyExist(Exception):
 class CustomerNotfoundException(Exception):
    pass
 class Bank:    
-  
-  customers = []
-
+  def __init__(self):
+   self.customers = []
 
   def loadData(self):
     with open("banking/bank.csv",'r') as file:
@@ -21,8 +20,6 @@ class Bank:
         customer = Customer(row["frst_name"],row["last_name"],account)
         self.customers.append(customer)
       return self.customers
- 
-
 
   def addCustomer(self, firstName,lastName,password,checking_amount = 0 ,saving_amount = 0):
     number = int(self.customers[len(self.customers)-1].account.id)
@@ -34,7 +31,8 @@ class Bank:
     return newCustomer
 
   def transferToDifferentCustomer(self,senderAccount,senderAccountType,transferAmount,recipientID):
-         
+         if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
+                raise ValueError("invalid amount")
          if senderAccountType == "checking":
             balance = senderAccount.balanceChecking
          elif senderAccountType == "saving":
@@ -44,13 +42,14 @@ class Bank:
          if balance < transferAmount:
            raise NotEnoughMoneyException("operation failed you don't have enough money in your account")      
           
-         recipientAccount  = self.checkCustomerExists(recipientID)
+         recipientAccount = self.checkCustomerExists(recipientID)
          if recipientAccount != None:
             if senderAccountType == "checking":
                senderAccount.balanceChecking -= transferAmount
+               recipientAccount.balanceChecking += transferAmount
             elif senderAccountType ==  "saving":
                senderAccount.balanceSavings -= transferAmount
-            recipientAccount.balanceChecking += transferAmount
+               recipientAccount.balanceChecking += transferAmount
 
   def checkCustomerExists(self,recipientID):
       for customer in self.customers:

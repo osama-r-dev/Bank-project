@@ -1,6 +1,7 @@
 
 class NameTooLongException(Exception):
      pass
+
 class InvalidCharacterException(Exception):
      pass
 
@@ -13,9 +14,10 @@ class Customer:
         self.lastName =  self.qualifyName(lastName)
         self.account = account
        
-
+       
      def qualifyName(self,name):
         
+
            validChars = list("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_")
            if len(name) > 15:     
               raise NameTooLongException("The name you entered must contain 15 at mixmum")

@@ -7,7 +7,10 @@ class CustmerAlreadyExist(Exception):
    pass
 class CustomerNotfoundException(Exception):
    pass
+class InvalidAcountInfo(Exception):
+   pass
 class Bank:    
+
   def __init__(self):
    self.customers = []
 
@@ -57,7 +60,20 @@ class Bank:
             return customer.account
       else:
         raise CustomerNotfoundException(f"There is not custmer with the ID: {recipientID}")
-          
+
+
+
+  def login(self, customerID , password):      
+      if customerID.isdigit() == False:
+        raise ValueError("invalid user")
+      customerID = int(customerID)
+      for customer in self.customers:
+         customerAccount = customer.account
+         if customerAccount.id == customerID and customerAccount.password == password:
+            return customerAccount
+      else:
+          raise InvalidAcountInfo("Wrong username/password")   
+                   
  
   def printCustomers(self):
      for cust in self.customers:

@@ -37,6 +37,10 @@ class TestBank(unittest.TestCase):
               self.bank2.transferToDifferentCustomer(self.ahmad.account,"checking",1000,100)   
     
 
+    def test_login(self):
+        self.assertEqual(self.bank1.login(6,"34344343"),True)
+
+
     # test amount
     
 

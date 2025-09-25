@@ -20,7 +20,7 @@ class Account:
         self.savingDraftCount = 0
         
      def qualifyPassword(self,password):
-        if len(password) < 8:
+        if len(str(password)) < 8:
          raise PasswordTooShort("Too short password") 
         else:      
          return password

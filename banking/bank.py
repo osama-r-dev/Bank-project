@@ -18,7 +18,7 @@ class Bank:
     with open("banking/bank.csv",'r') as file:
       reader = csv.DictReader(file)
       for row in reader:
-        account = Account(row["password"],int (row["balance_checking"]),int(row["balance_savings"]))
+        account = Account(row["password"],float (row["balance_checking"]),float(row["balance_savings"]))
         account.setID(int (row["account_id"]))
         customer = Customer(row["frst_name"],row["last_name"],account)
         self.customers.append(customer)
@@ -60,8 +60,6 @@ class Bank:
             return customer.account
       else:
         raise CustomerNotfoundException(f"There is not custmer with the ID: {recipientID}")
-
-
 
   def login(self, customerID , password):      
       if customerID.isdigit() == False:

@@ -8,7 +8,6 @@ from banking.customer import InvalidCharacterException
 class InvalidUserInput(Exception):
     pass
 
-
 def home(bank):
    try:
       userInput = int(input("1- create account    2- login      3- exit \n"))
@@ -22,7 +21,7 @@ def home(bank):
              pass   
           case 4:
               bank.printCustomers()    
-   except InvalidAcountInfo:
+   except ValueError:
      print("invalid option")           
 
 def createNewAccount(bank):
@@ -69,21 +68,73 @@ def login(bank):
             
          print("Success")    
          
-     operations(account)    
+     operations(account,bank)    
 
 ## working on this so far
-def operations(account):
+def operations(account,bank):
  try:
-     userInput = int(input("1- My accounts    2- deposit   3- withdraw  4- transfer \n"))
+  while True:
+     userInput = int(input("1- My accounts    2- Deposit   3- Withdraw  4- Transfer  -5 Home \n"))
      match userInput:
           case 1:
-           print(f" Checking Account => Balance: {account.balanceChecking}/n")    
+               while True:
+                try:
+                 print(f""" Checking Account => Balance: {account.balanceChecking} | Savings Account => Balance: {account.balanceSavings}     1- Back""") 
+                 option = int(input(""))
+                 if option == 1:
+                   operations(account,bank)
+                   break
+                except ValueError:
+                  print("Invalid option")
           case 2:
-             pass 
+            deposit(account) 
           case 3: 
-              pass
+            break
+          case 4:
+           break
+          case 5:
+            break
+            home(bank)
  except ValueError:
-     pass
+     print("invalid option")
+     operations(account,bank)
+
+def deposit(account):
+ state = False
+ accountType = ""
+ try:
+    while True:
+   
+        userAccountTypeInput = input("To:    1- Checking Account 2- Savings Account")
+        amount = input("Amount")
+
+        match userAccountTypeInput:
+           case 1:
+             accountType = "checking"
+             account.deposit(accountType,amount)
+             break
+           case 2: 
+            accountType = "saving"
+            break
+    account.deposit(accountType,amount)
+ 
+ except ValueError as excp:
+    print(excp)
+    print("success")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # LOADING DATA FORM CSV FILE

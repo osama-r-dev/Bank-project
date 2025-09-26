@@ -33,7 +33,7 @@ class Bank:
     self.customers.append(newCustomer) 
     return newCustomer
 
-  def transferToDifferentCustomer(self,senderAccount,senderAccountType,transferAmount,recipientID):
+  def transferToAnotherCustomer(self,senderAccount,senderAccountType,transferAmount,recipientID):
          if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
                 raise ValueError("invalid amount")
          if senderAccountType == "checking":
@@ -41,23 +41,29 @@ class Bank:
          elif senderAccountType == "saving":
             balance = senderAccount.balanceSavings
          else:
-           raise ValueError("invaild account")
+           raise ValueError("invaild account type")
          if balance < transferAmount:
            raise NotEnoughMoneyException("operation failed you don't have enough money in your account")      
           
-         recipientAccount = self.checkCustomerExists(recipientID)
+         recipientCustomer= self.checkCustomerExists(recipientID)
+         recipientAccount = recipientCustomer.account
          if recipientAccount != None:
             if senderAccountType == "checking":
                senderAccount.balanceChecking -= transferAmount
                recipientAccount.balanceChecking += transferAmount
+               return [senderAccount.balanceChecking,recipientCustomer]
             elif senderAccountType ==  "saving":
                senderAccount.balanceSavings -= transferAmount
                recipientAccount.balanceChecking += transferAmount
+               return [senderAccount.balanceSavings,recipientCustomer]
 
   def checkCustomerExists(self,recipientID):
+      if recipientID.isdigit() == False:
+        raise ValueError("invalid user")
+      recipientID = int(recipientID)
       for customer in self.customers:
           if customer.account.id == recipientID:
-            return customer.account
+            return customer
       else:
         raise CustomerNotfoundException(f"There is no custmer with the ID: {recipientID}")
 
@@ -69,6 +75,7 @@ class Bank:
          customerAccount = customer.account
          if customerAccount.id == customerID and customerAccount.password == password:
             return customerAccount
+         
       else:
           raise InvalidAcountInfo("Wrong username/password")   
                    

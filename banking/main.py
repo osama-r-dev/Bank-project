@@ -8,6 +8,7 @@ from banking.customer import InvalidCharacterException
 from banking.account import InvalidAmountException
 from banking.account import AccountDeactivated
 from banking.account import NotEnoughMoneyException
+from banking.bank import CustomerNotfoundException
 
 AccountDeactivated
 class InvalidUserInput(Exception):
@@ -140,7 +141,7 @@ def withdraw(account):
     while True:
    
         amount = float(input("Amount: "))
-        userAccountTypeInput = int(input("To:    1- Checking Account     2- Savings Account \n"))
+        userAccountTypeInput = int(input("From:    1- Checking Account     2- Savings Account \n"))
 
         match userAccountTypeInput:
            case 1:
@@ -164,14 +165,41 @@ def withdraw(account):
     
 
 def transfer(account,bank):
-   pass
- 
+   
+   try:
+    
+    while True:
+       
+       amount = float(input("Amount: "))
+       senderAccountTypeInput = int(input("From:    1- Checking Account     2- Savings Account \n"))
+       recipientID = input("ID of recipient")
 
-
-
-
-
-
+       match senderAccountTypeInput:
+           case 1:
+             accountType = "checking"
+             break
+           case 2: 
+            accountType = "saving"
+            break
+         
+    transferResult = bank.transferToAnotherCustomer(account,accountType,amount,recipientID)
+    recipientFirstName = transferResult[1].firstName
+    recipientLastName = transferResult[1].lastName 
+    newBalance = transferResult[0]
+     
+   except ValueError :
+    print("Invalid input")
+   except NotEnoughMoneyException as excp :
+    print(excp)
+  
+   except CustomerNotfoundException as excp:
+    print(excp)
+   else:
+    print(f"""
+    Succuess of transfer:   {amount}
+    To:  {recipientFirstName} {recipientLastName}        
+    New Balance:   {newBalance} 
+    """)
 
 
 

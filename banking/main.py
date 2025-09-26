@@ -6,6 +6,10 @@ from banking.customer import NameTooLongException
 from banking.bank import InvalidAcountInfo
 from banking.customer import InvalidCharacterException
 from banking.account import InvalidAmountException
+from banking.account import AccountDeactivated
+from banking.account import NotEnoughMoneyException
+
+AccountDeactivated
 class InvalidUserInput(Exception):
     pass
 
@@ -90,9 +94,9 @@ def operations(account,bank):
           case 2:
             deposit(account) 
           case 3: 
-            break
+            withdraw(account)
           case 4:
-           break
+            transfer(account,bank)
           case 5:
             break
             home(bank)
@@ -130,10 +134,38 @@ def deposit(account):
  New Balance:   {newBalance}         
  """)
     
+def withdraw(account):
+   try:
 
+    while True:
+   
+        amount = float(input("Amount: "))
+        userAccountTypeInput = int(input("To:    1- Checking Account     2- Savings Account \n"))
 
+        match userAccountTypeInput:
+           case 1:
+             accountType = "checking"
+             break
+           case 2: 
+            accountType = "saving"
+            break
+    newBalance = account.withdraw(accountType,amount)
+   except ValueError :
+    print("Invalid input")
+   except AccountDeactivated as excp:
+    print(excp)
+   except NotEnoughMoneyException as excp:
+    print(excp)
+   else: 
+    print(f"""
+ Succuess withdraw of:   {amount}
+ New Balance:   {newBalance}         
+ """)
+    
 
-
+def transfer(account,bank):
+   pass
+ 
 
 
 

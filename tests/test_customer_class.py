@@ -11,11 +11,6 @@ class TestAccount(unittest.TestCase):
      self.customer = Customer("osama","alrehaili")
      
   
-       
-          
-
-
-
   def test_name_too_long(self):
       with self.assertRaises(NameTooLongException):
          Customer("osamaaaaaaaaaaaaa","alrehaili") # osama..a contains more than 15 chars shouold fail

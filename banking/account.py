@@ -49,20 +49,26 @@ class Account:
     
      def withdraw(self,accountType,amount):
         
-        if amount is None or not isinstance(amount,(int,float)) or amount <= 0: 
+        if amount is None or not isinstance(amount,(int,float)) : 
                 raise InvalidAmountException("invalid amount")
         
         if self.checkAccount(accountType,amount) == True:
-           if accountType.lower() == "checking":
-            if self.checkingDeactivated == True:
-               raise AccountDeactivated("failed Your account is deactivated ")
-            self.balanceChecking -= amount
-            return self.balanceChecking
-           else:
-             if self.savingsDeactivated == True:
+         
+            if accountType.lower() == "checking":
+               if self.checkingDeactivated == True:
+                  raise AccountDeactivated("failed Your account is deactivated ")
+               if self.balanceChecking - amount < 0 or self.balanceChecking <= 0:
+                 return self.handleOverDraft(accountType,amount,self.balanceChecking)
+               self.balanceChecking -= amount
+               return self.balanceChecking
+           
+            elif accountType.lower() == "saving":
+              if self.savingsDeactivated == True:
                 raise AccountDeactivated("failed Your account is deactivated ")
-             self.balanceSavings -= amount
-             return self.balanceSavings
+              if self.balanceSavings - amount < 0 or self.balanceSavings < 0:
+                return self.handleOverDraft(accountType,amount,self.balanceSavings)
+            self.balanceSavings -= amount
+            return self.balanceSavings
 
      def transferToDifferentAccountType(self,accountType,transferAmount):
 
@@ -85,30 +91,37 @@ class Account:
           
 
      def checkAccount(self,accountType,transferAmount):
-        
+        balance = None
         if accountType.lower() == "checking":  
             balance = self.balanceChecking
+
         elif accountType.lower() == "saving":
             balance = self.balanceSavings
         else:
            raise ValueError("invaild account")
         if balance < 0 and transferAmount > 100:
             raise NotEnoughMoneyException("invalid operaion")
-        if balance - transferAmount < 0:
+        else:
+            return True
+
+     def handleOverDraft(self, accountType, transferAmount,balance):
+      if balance - transferAmount < 0:
             if balance - transferAmount -35 >= -100:
 
                if accountType.lower() == "checking":
+                  self.balanceChecking -= transferAmount
                   self.balanceChecking -= 35
                   self.checkingDraftCount += 1
                   if self.checkingDraftCount >= 2:
                       self.checkingDeactivated = True
-                  return True
+                  return self.balanceChecking
                elif accountType.lower() == "saving":
+                    self.balanceChecking -= transferAmount
                     self.balanceSavings -= 35 
                     self.savingDraftCount +=1
                     if self.savingDraftCount >= 2:
                         self.savingsDeactivated = True  
-                    return True
+                    return self.balanceSavings
             else:
                if accountType.lower() == "checking":
                   self.checkingDraftCount +=1
@@ -119,8 +132,6 @@ class Account:
                    if self.savingDraftCount >= 2:
                         self.savingsDeactivated = True  
                raise NotEnoughMoneyException("operation failed your account's balance can't have less than -100$")  
-        else:        
-          return True
 
 
      def setID(self,id):

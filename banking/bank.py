@@ -59,7 +59,7 @@ class Bank:
           if customer.account.id == recipientID:
             return customer.account
       else:
-        raise CustomerNotfoundException(f"There is not custmer with the ID: {recipientID}")
+        raise CustomerNotfoundException(f"There is no custmer with the ID: {recipientID}")
 
   def login(self, customerID , password):      
       if customerID.isdigit() == False:

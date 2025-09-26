@@ -6,6 +6,8 @@ class PasswordTooShort(Exception):
      pass
 class AccountDeactivated(Exception):
     pass
+class InvalidAmountException(Exception):
+    pass
 
 class Account:
      
@@ -28,7 +30,7 @@ class Account:
 
      def deposit(self,accountType,amount):
            if amount is None or not isinstance(amount,(int,float)) or amount <= 0: 
-                raise ValueError("invalid amount")
+                raise InvalidAmountException("invalid amount")
             
            if accountType.lower() == "checking":
                 self.balanceChecking += amount 
@@ -43,12 +45,12 @@ class Account:
                   self.savingDraftCount = 0
               return self.balanceSavings
            else:        
-              raise ValueError("invalid account")
+              raise ValueError("invalid account type")
     
      def withdraw(self,accountType,amount):
         
         if amount is None or not isinstance(amount,(int,float)) or amount <= 0: 
-                raise ValueError("invalid amount")
+                raise InvalidAmountException("invalid amount")
         
         if self.checkAccount(accountType,amount) == True:
            if accountType.lower() == "checking":
@@ -65,7 +67,7 @@ class Account:
      def transferToDifferentAccountType(self,accountType,transferAmount):
 
       if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
-                raise ValueError("invalid amount")
+                raise InvalidAmountException("invalid amount")
       if self.checkAccount(accountType,transferAmount) == True:
           if accountType.lower() == "checking":
               if self.checkingDeactivated == True:

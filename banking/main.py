@@ -5,6 +5,7 @@ from banking.customer import Customer
 from banking.customer import NameTooLongException
 from banking.bank import InvalidAcountInfo
 from banking.customer import InvalidCharacterException
+from banking.account import InvalidAmountException
 class InvalidUserInput(Exception):
     pass
 
@@ -100,28 +101,35 @@ def operations(account,bank):
      operations(account,bank)
 
 def deposit(account):
- state = False
- accountType = ""
- try:
+  state = False
+  accountType = ""
+  newBalance = 0
+  try:
+
     while True:
-   
-        userAccountTypeInput = input("To:    1- Checking Account 2- Savings Account")
-        amount = input("Amount")
+        
+        amount = float(input("Amount: "))
+        userAccountTypeInput = int(input("To:    1- Checking Account     2- Savings Account \n"))
 
         match userAccountTypeInput:
            case 1:
              accountType = "checking"
-             account.deposit(accountType,amount)
              break
            case 2: 
             accountType = "saving"
             break
-    account.deposit(accountType,amount)
+    newBalance = account.deposit(accountType,amount)
  
- except ValueError as excp:
+  except ValueError :
+    print("Invalid input")
+  except InvalidAmountException as excp:
     print(excp)
-    print("success")
-
+  else: 
+    print(f"""
+ Succuess Deposit of:   {amount}
+ New Balance:   {newBalance}         
+ """)
+    
 
 
 

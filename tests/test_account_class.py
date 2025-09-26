@@ -5,6 +5,7 @@ from banking.account import Account
 from banking.account import NotEnoughMoneyException
 from banking.account import AccountDeactivated
 from banking.account import PasswordTooShort
+from banking.account import InvalidAmountException
 class TestAccountClass(unittest.TestCase):
     account1 = Account("12345678",1000,1000)
     account2 = Account("1234567890",3,1000)
@@ -17,7 +18,7 @@ class TestAccountClass(unittest.TestCase):
             Account("1267",10000,100)
     
     def test_deposit_passing_random_value(self):
-       with self.assertRaises(ValueError):
+       with self.assertRaises(InvalidAmountException):
            self.account1.deposit("nothing",-100)
            self.account2.deposit("checking","d")
            self.account2.deposit("checking",-1000) 

@@ -65,7 +65,7 @@ class Account:
             elif accountType.lower() == "saving":
               if self.savingsDeactivated == True:
                 raise AccountDeactivated("failed Your account is deactivated ")
-              if self.balanceSavings - amount < 0 or self.balanceSavings < 0:
+              if self.balanceSavings - amount < 0 or self.balanceSavings <= 0:
                 return self.handleOverDraft(accountType,amount,self.balanceSavings)
             self.balanceSavings -= amount
             return self.balanceSavings
@@ -80,13 +80,13 @@ class Account:
                   raise AccountDeactivated("failed Your account is deactivated ")
               self.balanceChecking -= transferAmount
               self.balanceSavings += transferAmount
-            
+              return self.balanceSavings
           else:
               if self.savingsDeactivated == True:
                   raise AccountDeactivated("failed Your account is deactivated ")                     
               self.balanceSavings -= transferAmount
               self.balanceChecking += transferAmount
-
+              return self.balanceChecking
       return [self.balanceChecking,self.balanceSavings]
           
 
@@ -116,7 +116,7 @@ class Account:
                       self.checkingDeactivated = True
                   return self.balanceChecking
                elif accountType.lower() == "saving":
-                    self.balanceChecking -= transferAmount
+                    self.balanceSavings -= transferAmount
                     self.balanceSavings -= 35 
                     self.savingDraftCount +=1
                     if self.savingDraftCount >= 2:

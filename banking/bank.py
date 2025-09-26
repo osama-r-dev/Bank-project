@@ -2,6 +2,7 @@
 import csv
 from banking.account import NotEnoughMoneyException
 from banking.account import Account
+from banking.account import AccountDeactivated
 from banking.customer import Customer
 class CustmerAlreadyExist(Exception):
    pass
@@ -37,9 +38,13 @@ class Bank:
          if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
                 raise ValueError("invalid amount")
          if senderAccountType == "checking":
-            balance = senderAccount.balanceChecking
+             if self.checkingDeactivated == True:
+               raise AccountDeactivated("failed Your account is deactivated ")
+             balance = senderAccount.balanceChecking
          elif senderAccountType == "saving":
-            balance = senderAccount.balanceSavings
+             if self.checkingDeactivated == True:
+                raise AccountDeactivated("failed Your account is deactivated ")
+             balance = senderAccount.balanceSavings
          else:
            raise ValueError("invaild account type")
          if balance < transferAmount:
@@ -86,3 +91,5 @@ class Bank:
 
   
 
+  def updateData():
+     pass

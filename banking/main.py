@@ -97,9 +97,15 @@ def operations(account,bank):
           case 3: 
             withdraw(account)
           case 4:
-            transfer(account,bank)
+           option = int(input("1- between my accounts   2- to a customer"))
+           match option:
+              case 1:
+                 transfer(account)
+                 
+              case 2:
+                 transferToAnotherCustomer(account,bank)
+                 
           case 5:
-            break
             home(bank)
  except ValueError:
      print("invalid option")
@@ -127,7 +133,9 @@ def deposit(account):
  
   except ValueError :
     print("Invalid input")
+    deposit(account)
   except InvalidAmountException as excp:
+    deposit(account)
     print(excp)
   else: 
     print(f"""
@@ -153,10 +161,12 @@ def withdraw(account):
     newBalance = account.withdraw(accountType,amount)
    except ValueError :
     print("Invalid input")
+    withdraw(account)
    except AccountDeactivated as excp:
     print(excp)
    except NotEnoughMoneyException as excp:
     print(excp)
+    return
    else: 
     print(f"""
  Succuess withdraw of:   {amount}
@@ -164,11 +174,49 @@ def withdraw(account):
  """)
     
 
-def transfer(account,bank):
+def transfer(account):
+ state = False  
+ try:
+    
+    while state == False:  
+    
+       
+       amount = float(input("Amount: "))
+       senderAccountTypeInput = int(input("To:    1- Checking Account     2- Savings Account \n"))
+
+       match senderAccountTypeInput:
+           case 1:
+             accountType = "saving"
+             break
+           case 2: 
+            accountType = "checking"
+            break
+    newBalance = account.transferToDifferentAccountType(accountType,amount)    
+
+ except ValueError :
+    print("Invalid input")
+    transfer(account)
+ except NotEnoughMoneyException as excp :
+    print(excp)
+    return
+ except InvalidAmountException as excp :
+    print(excp)
+    transfer(account)
+ except AccountDeactivated as excp:
+    print(excp)   
+    return
+ else: 
+    print(f"""
+ Succuess withdraw of:   {amount}
+ New Balance:   {newBalance}         
+ """)
+
+def transferToAnotherCustomer(account,bank):
    
    try:
     
-    while True:
+    while True:  
+    
        
        amount = float(input("Amount: "))
        senderAccountTypeInput = int(input("From:    1- Checking Account     2- Savings Account \n"))
@@ -189,11 +237,17 @@ def transfer(account,bank):
      
    except ValueError :
     print("Invalid input")
+    transferToAnotherCustomer(account,bank)
    except NotEnoughMoneyException as excp :
     print(excp)
-  
+    return
+    transferToAnotherCustomer(account,bank)
    except CustomerNotfoundException as excp:
     print(excp)
+    transferToAnotherCustomer(account,bank)
+   except AccountDeactivated as excp:
+    print(excp)
+    return
    else:
     print(f"""
     Succuess of transfer:   {amount}

@@ -1,3 +1,4 @@
+import sys
 from banking.bank import Bank
 from banking.account import Account
 from banking.account import PasswordTooShort
@@ -22,17 +23,17 @@ def home(bank):
           case 1:
               createNewAccount(bank)
           case 2:
-              login(bank)
+              login(bank)  
           case 3:
-             pass   
-          case 4:
-              bank.printCustomers()    
+              bank.updateData()
+              print("Thanks for using our bank!")  
+              sys.exit()
    except ValueError:
      print("invalid option")           
 
 def createNewAccount(bank):
     state = False
-    while state == False:
+    while True:
         try:
              userFirstName = input("First Name: ") 
              userLastName = input("Last Name: ")
@@ -54,25 +55,31 @@ def createNewAccount(bank):
 
         else:
          print("customer has been added")   
-         state = True
+         home(bank)
        
 
-def login(bank):
+def login(bank,counter = 0):
+     counter = 0
      account = None
      while account == None:
+        if counter == 3:
+          home(bank)
         try: 
+             
              userID = input("user name: ")
              userPassword = (input("password: "))
              account = bank.login(userID,userPassword)
 
         except InvalidAcountInfo as e:
             print(e)
+            counter +=1
         except ValueError as e:
             print(e)
-
+            counter += 1
         else:    
             
-         print("Success")    
+         print("Success") 
+         counter = 0   
          
      operations(account,bank)    
 
@@ -261,15 +268,10 @@ def transferToAnotherCustomer(account,bank):
 
 # LOADING DATA FORM CSV FILE
 
-exit = False
 myBank = Bank()
 myBank.loadData()
-firstName = ''
-lastName = ''
-password = ''
  
-while exit != True:
-   home(myBank)
+home(myBank)
 
     
           

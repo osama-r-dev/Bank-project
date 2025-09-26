@@ -1,8 +1,8 @@
 account_id,frst_name,last_name,password,balance_checking,balance_savings
-1,suresh,sigera,juagw362,1000,10000
-2,james,taylor,idh36%@#FGd,10000,10000
-3,melvin,gordon,uYWE732g4ga1,2000,20000
-4,stacey,abrams,DEU8_qw3y72$,2000,20000
-5,jake,paul,d^dg23g)@,100000,100000
-
-
+1,suresh,sigera,juagw362,1000.0,0.0
+2,james,taylor,idh36%@#FGd,10000.0,10000.0
+3,melvin,gordon,uYWE732g4ga1,2000.0,1.0
+4,stacey,abrams,DEU8_qw3y72$,2000.0,20000.0
+5,jake,paul,d^dg23g)@,100000.0,100000.0
+6,osama,rasheed,11111111,29895.0,1000.0
+7,osama,rasheed,12344444444,0.0,0.0

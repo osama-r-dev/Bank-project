@@ -38,11 +38,11 @@ class Bank:
          if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
                 raise ValueError("invalid amount")
          if senderAccountType == "checking":
-             if self.checkingDeactivated == True:
+             if senderAccount.checkingDeactivated == True:
                raise AccountDeactivated("failed Your account is deactivated ")
              balance = senderAccount.balanceChecking
          elif senderAccountType == "saving":
-             if self.checkingDeactivated == True:
+             if senderAccount.checkingDeactivated == True:
                 raise AccountDeactivated("failed Your account is deactivated ")
              balance = senderAccount.balanceSavings
          else:
@@ -91,5 +91,19 @@ class Bank:
 
   
 
-  def updateData():
-     pass
+  def updateData(self):
+     with open("banking/bank.csv","w",newline="") as file:
+        listValues = ["account_id","frst_name","last_name","password","balance_checking","balance_savings"]
+        writer = csv.DictWriter(file , fieldnames = listValues)
+        writer.writeheader()
+        for customer in self.customers:
+          dic = {
+           "account_id": customer.account.id,
+            "frst_name": customer.firstName,
+             "last_name": customer.lastName,
+              "password": customer.account.password,
+               "balance_checking": customer.account.balanceChecking,
+                 "balance_savings": customer.account.balanceSavings,
+           
+          }
+          writer.writerow(dic)

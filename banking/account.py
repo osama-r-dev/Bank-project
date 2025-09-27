@@ -1,14 +1,17 @@
 
 import csv
+import re
+from banking.transaction import Transaction
 class NotEnoughMoneyException(Exception):
-   pass
-class PasswordTooShort(Exception):
+     pass
+class PasswordTooWeak(Exception):
      pass
 class AccountDeactivated(Exception):
-    pass
+     pass
 class InvalidAmountException(Exception):
+     pass
+class ImproperPassword(Exception):
     pass
-
 class Account:
      
      def __init__ (self, password ,balanceChecking = 0 ,balanceSavings = 0 ):
@@ -20,15 +23,21 @@ class Account:
         self.savingsDeactivated = False
         self.checkingDraftCount = 0
         self.savingDraftCount = 0
-        
-     def qualifyPassword(self,password):
-        if len(str(password)) < 8:
-         raise PasswordTooShort("Too short password") 
-        else:      
-         return password
-      
 
-     def deposit(self,accountType,amount):
+
+     def qualifyPassword(self,password):
+         if len(password) > 32:
+             raise ImproperPassword("Too long password make sure it doesn't exceed 32 characters long")    
+         letters = r"[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]"
+         if len(str(password)) > 8 and bool(re.search(letters,password)) == True and bool(re.search(r"[qwertyuioplkjghfdsazxcvbnm]",password)) == True and bool(re.search(r"[1234567890]",password)):
+            return password
+         
+         else:      
+           raise PasswordTooWeak("Password too weak, password must conatain a character, a digit and one complex character at least") 
+         
+
+     
+     def deposit(self,accountType,amount,senderName):
            if amount is None or not isinstance(amount,(int,float)) or amount <= 0: 
                 raise InvalidAmountException("invalid amount")
             
@@ -37,17 +46,24 @@ class Account:
                 if self.balanceChecking >= 0:
                     self.checkingDeactivated = False
                     self.checkingDraftCount = 0
-                return self.balanceChecking
+                transaction = Transaction("deposit","checking",amount,self.balanceChecking,senderName)
+                self.updateTransactionsHistory(self.id,transaction)
+                return transaction
            elif accountType.lower() == "saving":
               self.balanceSavings += amount
               if self.balanceSavings >= 0:
                   self.savingsDeactivated = False
                   self.savingDraftCount = 0
-              return self.balanceSavings
+              transaction = Transaction("deposit","saving",amount,self.balanceSavings,senderName)
+              self.updateTransactionsHistory(self.id, transaction)
+              return transaction
            else:        
               raise ValueError("invalid account type")
     
-     def withdraw(self,accountType,amount):
+     
+     
+     
+     def withdraw(self,accountType,amount,sender):
         
         if amount is None or not isinstance(amount,(int,float)) : 
                 raise InvalidAmountException("invalid amount")
@@ -60,7 +76,9 @@ class Account:
                if self.balanceChecking - amount < 0 or self.balanceChecking <= 0:
                  return self.handleOverDraft(accountType,amount,self.balanceChecking)
                self.balanceChecking -= amount
-               return self.balanceChecking
+               transaction = Transaction("withdraw","checking",amount, self.balanceChecking,sender)
+               self.updateTransactionsHistory(self.id,transaction)
+               return transaction
            
             elif accountType.lower() == "saving":
               if self.savingsDeactivated == True:
@@ -68,28 +86,40 @@ class Account:
               if self.balanceSavings - amount < 0 or self.balanceSavings <= 0:
                 return self.handleOverDraft(accountType,amount,self.balanceSavings)
             self.balanceSavings -= amount
-            return self.balanceSavings
+            transaction = Transaction("withdraw","savings",amount, self.balanceSavings,sender)
+            self.updateTransactionsHistory(self.id,transaction)
+            return transaction
+    
 
-     def transferToDifferentAccountType(self,accountType,transferAmount):
-
+     def transferToDifferentAccountType(self,accountType,transferAmount,sender):
+      
       if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
                 raise InvalidAmountException("invalid amount")
+      if accountType.lower() == "checking" and self.balanceChecking < transferAmount:
+        raise NotEnoughMoneyException("Not enough money in checking account")
+      elif accountType.lower() == "saving" and self.balanceSavings < transferAmount:
+        raise NotEnoughMoneyException("Not enough money in savings account")
+      
       if self.checkAccount(accountType,transferAmount) == True:
           if accountType.lower() == "checking":
               if self.checkingDeactivated == True:
                   raise AccountDeactivated("failed Your account is deactivated ")
               self.balanceChecking -= transferAmount
               self.balanceSavings += transferAmount
-              return self.balanceSavings
+              transaction = Transaction("transfer","checking",transferAmount,self.balanceChecking, sender ,"savings" )
+              self.updateTransactionsHistory(self.id,tranaction)
+              return tranaction
           else:
               if self.savingsDeactivated == True:
                   raise AccountDeactivated("failed Your account is deactivated ")                     
               self.balanceSavings -= transferAmount
               self.balanceChecking += transferAmount
-              return self.balanceChecking
-      return [self.balanceChecking,self.balanceSavings]
+              tranaction = Transaction("transfer","saving",transferAmount,self.balanceSavings, sender, "checking")
+              self.updateTransactionsHistory(self.id,tranaction)
+              return tranaction
           
-
+    
+    
      def checkAccount(self,accountType,transferAmount):
         balance = None
         if accountType.lower() == "checking":  
@@ -104,6 +134,8 @@ class Account:
         else:
             return True
 
+     
+     
      def handleOverDraft(self, accountType, transferAmount,balance):
       if balance - transferAmount < 0:
             if balance - transferAmount -35 >= -100:
@@ -134,6 +166,8 @@ class Account:
                raise NotEnoughMoneyException("operation failed your account's balance can't have less than -100$")  
 
 
+
+
      def updateTransactionsHistory(self,id,trnasaction):
       try:
          with open ("banking/transactions.csv","a", newline= '') as file:
@@ -143,6 +177,8 @@ class Account:
            
       except Exception:
           print("File can't be written")
+
+
 
      def transactionsHistory(self,accountid):
           transactions = []
@@ -161,13 +197,4 @@ class Account:
      def setID(self,id):
         self.id = id
 
-
-     def setID(self,id):
-        self.id = id
-
-def checkingAccount():
-    pass
-
-def savingAccount():
-    pass
 

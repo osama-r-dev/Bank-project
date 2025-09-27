@@ -144,6 +144,22 @@ class Account:
       except Exception:
           print("File can't be written")
 
+     def transactionsHistory(self,accountid):
+          transactions = []
+          try:
+              with open("banking/transactions.csv",'r', newline = "") as file:
+                  reader = csv.reader(file)
+                  for row in reader:
+                      id, transaction = row
+                      if str(id) == str(accountid):
+                          transactions.append(transaction)
+          except Exception:
+              print("File cannot be read")                
+          for trans in  transactions:
+              print(trans)
+
+     def setID(self,id):
+        self.id = id
 
 
      def setID(self,id):

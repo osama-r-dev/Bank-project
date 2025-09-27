@@ -86,7 +86,6 @@ def login(bank ,counter = 0):
          
      operations(account,bank,senderFullName)    
 
-## working on this so far
 def operations(account,bank,senderFullName):
  try:
   while True:

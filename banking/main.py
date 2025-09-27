@@ -1,8 +1,6 @@
 import sys
 from banking.bank import Bank
-from banking.account import Account
-from banking.account import PasswordTooShort
-from banking.customer import Customer
+from banking.account import PasswordTooWeak
 from banking.customer import NameTooLongException
 from banking.bank import InvalidAcountInfo
 from banking.customer import InvalidCharacterException
@@ -10,6 +8,7 @@ from banking.account import InvalidAmountException
 from banking.account import AccountDeactivated
 from banking.account import NotEnoughMoneyException
 from banking.bank import CustomerNotfoundException
+from banking.account import ImproperPassword
 
 AccountDeactivated
 class InvalidUserInput(Exception):
@@ -26,13 +25,12 @@ def home(bank):
               login(bank)  
           case 3:
               bank.updateData()
-              print("Thanks for using our bank!")  
+              print("THANKS FOR USING MY BANK!")  
               sys.exit()
    except ValueError:
      print("invalid option")           
 
 def createNewAccount(bank):
-    state = False
     while True:
         try:
              userFirstName = input("First Name: ") 
@@ -50,16 +48,18 @@ def createNewAccount(bank):
         except ValueError as excp:
             print(excp)
 
-        except PasswordTooShort as excp:
+        except PasswordTooWeak as excp:
             print(excp)   
+        except ImproperPassword as excp:
+           print(excp)
 
         else:
          print("customer has been added")   
          home(bank)
        
 
-def login(bank,counter = 0):
-     counter = 0
+def login(bank ,counter = 0):
+     
      account = None
      while account == None:
         if counter == 3:
@@ -68,7 +68,10 @@ def login(bank,counter = 0):
              
              userID = input("user name: ")
              userPassword = (input("password: "))
-             account = bank.login(userID,userPassword)
+             customer = bank.login(userID,userPassword)
+             senderFullName = customer.firstName +" "+ customer.lastName
+             account = customer.account
+             
 
         except InvalidAcountInfo as e:
             print(e)
@@ -79,15 +82,15 @@ def login(bank,counter = 0):
         else:    
             
          print("Success") 
-         counter = 0   
+       
          
-     operations(account,bank)    
+     operations(account,bank,senderFullName)    
 
 ## working on this so far
-def operations(account,bank):
+def operations(account,bank,senderFullName):
  try:
   while True:
-     userInput = int(input("1- My accounts    2- Deposit   3- Withdraw  4- Transfer  -5 Home \n"))
+     userInput = int(input("1- My accounts   2- Deposit   3- Withdraw  4- Transfer  -5 Home  -6 Transacitons History  \n"))
      match userInput:
           case 1:
                while True:
@@ -95,33 +98,33 @@ def operations(account,bank):
                  print(f""" Checking Account => Balance: {account.balanceChecking} | Savings Account => Balance: {account.balanceSavings}     1- Back""") 
                  option = int(input(""))
                  if option == 1:
-                   operations(account,bank)
+                   operations(account,bank,senderFullName)
                    break
                 except ValueError:
                   print("Invalid option")
           case 2:
-            deposit(account) 
+            deposit(account,senderFullName) 
           case 3: 
-            withdraw(account)
+            withdraw(account,senderFullName)
           case 4:
            option = int(input("1- between my accounts   2- to a customer"))
            match option:
               case 1:
-                 transfer(account)
+                 transfer(account,senderFullName)
                  
               case 2:
-                 transferToAnotherCustomer(account,bank)
+                 transferToAnotherCustomer(account,bank,senderFullName)
                  
           case 5:
             home(bank)
+          case 6:
+           account.transactionsHistory(account.id)
  except ValueError:
      print("invalid option")
-     operations(account,bank)
+     operations(account,bank,senderFullName)
 
-def deposit(account):
-  state = False
+def deposit(account,senderFullName):
   accountType = ""
-  newBalance = 0
   try:
 
     while True:
@@ -136,21 +139,18 @@ def deposit(account):
            case 2: 
             accountType = "saving"
             break
-    newBalance = account.deposit(accountType,amount)
+    transaction = account.deposit(accountType,amount,senderFullName)
  
   except ValueError :
     print("Invalid input")
-    deposit(account)
+    deposit(account,senderFullName)
   except InvalidAmountException as excp:
-    deposit(account)
+    deposit(account,senderFullName)
     print(excp)
   else: 
-    print(f"""
- Succuess Deposit of:   {amount}
- New Balance:   {newBalance}         
- """)
+   print(transaction)
     
-def withdraw(account):
+def withdraw(account,senderFullName):
    try:
 
     while True:
@@ -165,23 +165,20 @@ def withdraw(account):
            case 2: 
             accountType = "saving"
             break
-    newBalance = account.withdraw(accountType,amount)
+    transaction = account.withdraw(accountType,amount,senderFullName)
    except ValueError :
     print("Invalid input")
-    withdraw(account)
+    withdraw(account,senderFullName)
    except AccountDeactivated as excp:
     print(excp)
    except NotEnoughMoneyException as excp:
     print(excp)
     return
    else: 
-    print(f"""
- Succuess withdraw of:   {amount}
- New Balance:   {newBalance}         
- """)
+    print(transaction)
     
 
-def transfer(account):
+def transfer(account,senderFullName):
  state = False  
  try:
     
@@ -198,27 +195,24 @@ def transfer(account):
            case 2: 
             accountType = "checking"
             break
-    newBalance = account.transferToDifferentAccountType(accountType,amount)    
+    transaction = account.transferToDifferentAccountType(accountType,amount,senderFullName)    
 
  except ValueError :
     print("Invalid input")
-    transfer(account)
+    transfer(account,senderFullName)
  except NotEnoughMoneyException as excp :
     print(excp)
     return
  except InvalidAmountException as excp :
     print(excp)
-    transfer(account)
+    transfer(account,senderFullName)
  except AccountDeactivated as excp:
     print(excp)   
     return
  else: 
-    print(f"""
- Succuess withdraw of:   {amount}
- New Balance:   {newBalance}         
- """)
+   print(transaction)
 
-def transferToAnotherCustomer(account,bank):
+def transferToAnotherCustomer(account,bank,senderFullName):
    
    try:
     
@@ -237,34 +231,22 @@ def transferToAnotherCustomer(account,bank):
             accountType = "saving"
             break
          
-    transferResult = bank.transferToAnotherCustomer(account,accountType,amount,recipientID)
-    recipientFirstName = transferResult[1].firstName
-    recipientLastName = transferResult[1].lastName 
-    newBalance = transferResult[0]
+    transaction = bank.transferToAnotherCustomer(senderFullName,account,accountType,amount,recipientID)
      
    except ValueError :
     print("Invalid input")
-    transferToAnotherCustomer(account,bank)
+    transferToAnotherCustomer(account,bank,senderFullName)
    except NotEnoughMoneyException as excp :
     print(excp)
     return
-    transferToAnotherCustomer(account,bank)
    except CustomerNotfoundException as excp:
     print(excp)
-    transferToAnotherCustomer(account,bank)
+    transferToAnotherCustomer(account,bank,senderFullName)
    except AccountDeactivated as excp:
     print(excp)
     return
    else:
-    print(f"""
-    Succuess of transfer:   {amount}
-    To:  {recipientFirstName} {recipientLastName}        
-    New Balance:   {newBalance} 
-    """)
-
-
-
-
+    print(transaction)
 
 # LOADING DATA FORM CSV FILE
 

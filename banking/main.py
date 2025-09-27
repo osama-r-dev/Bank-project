@@ -144,8 +144,8 @@ def deposit(account,senderFullName):
     print("Invalid input")
     deposit(account,senderFullName)
   except InvalidAmountException as excp:
-    deposit(account,senderFullName)
     print(excp)
+    deposit(account,senderFullName)
   else: 
    print(transaction)
     

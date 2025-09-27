@@ -107,16 +107,16 @@ class Account:
               self.balanceChecking -= transferAmount
               self.balanceSavings += transferAmount
               transaction = Transaction("transfer","checking",transferAmount,self.balanceChecking, sender ,"savings" )
-              self.updateTransactionsHistory(self.id,tranaction)
-              return tranaction
+              self.updateTransactionsHistory(self.id,transaction)
+              return transaction
           else:
               if self.savingsDeactivated == True:
                   raise AccountDeactivated("failed Your account is deactivated ")                     
               self.balanceSavings -= transferAmount
               self.balanceChecking += transferAmount
-              tranaction = Transaction("transfer","saving",transferAmount,self.balanceSavings, sender, "checking")
-              self.updateTransactionsHistory(self.id,tranaction)
-              return tranaction
+              transaction = Transaction("transfer","saving",transferAmount,self.balanceSavings, sender, "checking")
+              self.updateTransactionsHistory(self.id,transaction)
+              return transaction
           
     
     

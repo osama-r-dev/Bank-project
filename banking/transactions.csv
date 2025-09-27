@@ -3,3 +3,46 @@
 2, 2025-09-27 22:14:36.759283  withdraw from savings   Amount:  999.0  New Balance: 9001.0 Gerorge Jones 
 2, 2025-09-27 22:14:46.119106  transfer  saving   Amount:  12.0  New Balance: 8989.0 from Gerorge Jones to: checking 
 2, 2025-09-27 22:14:59.478103  transfer  checking   Amount:  10.0  New Balance: 1002.0 from Gerorge Jones to: osama alrehaili 
+1, 2025-09-27 22:29:36.147122  deposit to checking   Amount:  500.0  New Balance: 500.0 | osama rasheed
+1, 2025-09-27 22:30:08.114911  deposit to saving   Amount:  200.0  New Balance: 200.0 | osama rasheed
+1, 2025-09-27 22:30:50.534726  withdraw from checking   Amount:  100.0  New Balance: 400.0 osama rasheed 
+1, 2025-09-27 22:31:21.959486  withdraw from savings   Amount:  50.0  New Balance: 150.0 osama rasheed 
+1, 2025-09-27 22:35:27.487395  deposit to checking   Amount:  2.222222222222222e+29  New Balance: 2.222222222222222e+29 | osama rasheed
+1, 2025-09-27 22:35:52.485311  withdraw from checking   Amount:  2.222222222222222e+29  New Balance: 0.0 osama rasheed 
+1, 2025-09-27 22:36:03.449005  deposit to checking   Amount:  500.0  New Balance: 500.0 | osama rasheed
+1, 2025-09-27 22:36:08.865395  deposit to saving   Amount:  200.0  New Balance: 200.0 | osama rasheed
+1, 2025-09-27 22:36:32.280224  withdraw from checking   Amount:  100.0  New Balance: 400.0 osama rasheed 
+1, 2025-09-27 22:36:39.809726  withdraw from savings   Amount:  50.0  New Balance: 150.0 osama rasheed 
+1, 2025-09-27 22:37:19.950010  transfer  checking   Amount:  100.0  New Balance: 300.0 from osama rasheed to: savings 
+1, 2025-09-27 22:38:29.132842  deposit to checking   Amount:  500.0  New Balance: 500.0 | osama rasheed
+1, 2025-09-27 22:38:37.486738  deposit to saving   Amount:  200.0  New Balance: 200.0 | osama rasheed
+1, 2025-09-27 22:38:59.902138  withdraw from checking   Amount:  100.0  New Balance: 400.0 osama rasheed 
+1, 2025-09-27 22:39:19.035565  withdraw from savings   Amount:  50.0  New Balance: 150.0 osama rasheed 
+1, 2025-09-27 22:39:41.307580  transfer  checking   Amount:  100.0  New Balance: 300.0 from osama rasheed to: savings 
+1, 2025-09-27 22:40:35.638074  transfer  saving   Amount:  1.0  New Balance: 249.0 from osama rasheed to: checking 
+1, 2025-09-27 22:41:22.821425  transfer  saving   Amount:  200.0  New Balance: 49.0 from osama rasheed to: checking 
+1, 2025-09-27 22:42:06.042775  transfer  checking   Amount:  1.0  New Balance: 500.0 from osama rasheed to: savings 
+2, 2025-09-27 22:43:25.498847  deposit to checking   Amount:  100.0  New Balance: 100.0 | George Jones
+1, 2025-09-27 22:44:04.775819  transfer  checking   Amount:  200.0  New Balance: 300.0 from osama rasheed to: George Jones 
+2, 2025-09-27 22:47:59.421240  withdraw from checking   Amount:  250.0  New Balance: 50.0 George Jones 
+2, 2025-09-27 22:48:14.844680  transfer  checking   Amount:  70.0  New Balance: -55.0 from George Jones to: savings 
+2, 2025-09-27 22:49:28.254525  deposit to checking   Amount:  75.0  New Balance: 20.0 | George Jones
+2, 2025-09-27 22:50:58.221354  deposit to checking   Amount:  1.0  New Balance: 21.0 | George Jones
+2, 2025-09-27 22:51:02.948069  withdraw from checking   Amount:  1.0  New Balance: 20.0 George Jones 
+2, 2025-09-27 22:51:15.813789  transfer  checking   Amount:  80.0  New Balance: -95.0 from George Jones to: savings 
+2, 2025-09-27 22:51:41.231101  deposit to checking   Amount:  155.0  New Balance: 60.0 | George Jones
+2, 2025-09-27 22:51:50.006751  withdraw from checking   Amount:  10.0  New Balance: 50.0 George Jones 
+2, 2025-09-27 22:52:04.821608  transfer  checking   Amount:  70.0  New Balance: -55.0 from George Jones to: savings 
+2, 2025-09-27 22:52:12.750367  deposit to checking   Amount:  100.0  New Balance: 45.0 | George Jones
+2, 2025-09-27 22:52:43.056116  withdraw from checking   Amount:  1.0  New Balance: 44.0 George Jones 
+2, 2025-09-27 22:54:18.099184  withdraw from checking   Amount:  44.0  New Balance: 0.0 George Jones 
+2, 2025-09-27 22:54:27.396437  deposit to checking   Amount:  50.0  New Balance: 50.0 | George Jones
+2, 2025-09-27 22:54:36.632083  transfer  checking   Amount:  70.0  New Balance: -55.0 from George Jones to: savings 
+2, 2025-09-27 22:54:41.173039  deposit to checking   Amount:  100.0  New Balance: 45.0 | George Jones
+2, 2025-09-27 22:56:35.991718  withdraw from checking   Amount:  45.0  New Balance: 0.0 George Jones 
+2, 2025-09-27 22:57:08.721882  deposit to checking   Amount:  20.0  New Balance: 20.0 | George Jones
+2, 2025-09-27 22:57:26.334902  withdraw from checking   Amount:  20.0  New Balance: 0.0 George Jones 
+2, 2025-09-27 22:57:38.996146  transfer  checking   Amount:  20.0  New Balance: -55.0 from George Jones to: savings 
+2, 2025-09-27 22:57:46.064119  transfer  checking   Amount:  10.0  New Balance: -100.0 from George Jones to: savings 
+1, 2025-09-27 23:01:07.003181  deposit to checking   Amount:  1.0  New Balance: 1.0 | osama rasheed
+1, 2025-09-27 23:02:38.715745  deposit to checking   Amount:  2.0  New Balance: 2.0 | osama rasheed

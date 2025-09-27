@@ -1,0 +1,29 @@
+1, 2025-09-27 20:58:32.467983  deposit to checking   Amount:  123.0  New Balance: 123.0 | osama rasheed
+1, 2025-09-27 20:58:55.126098  deposit to checking   Amount:  123.0  New Balance: 246.0 | osama rasheed
+1, 2025-09-27 20:59:02.562120  withdraw from checking   Amount:  20.0  New Balance: 226.0 osama rasheed 
+1, 2025-09-27 20:59:13.504857  withdraw from checking   Amount:  10.0  New Balance: 216.0 osama rasheed 
+, 2025-09-27 21:00:25.144656  transfer  checking   Amount:  20  New Balance: -55 from osama to: savings 
+, 2025-09-27 21:00:25.144955  transfer  checking   Amount:  9  New Balance: -99 from osama to: savings 
+, 2025-09-27 21:00:25.145313  deposit to checking   Amount:  1000  New Balance: 2000 | osama
+, 2025-09-27 21:00:25.145491  deposit to checking   Amount:  1000  New Balance: 3000 | osama
+, 2025-09-27 21:00:25.145846  transfer  checking   Amount:  30  New Balance: -65 from osama to: savings 
+, 2025-09-27 21:01:00.666869  transfer  checking   Amount:  20  New Balance: -55 from osama to: savings 
+, 2025-09-27 21:01:00.667048  transfer  checking   Amount:  9  New Balance: -99 from osama to: savings 
+, 2025-09-27 21:01:00.667316  deposit to checking   Amount:  1000  New Balance: 2000 | osama
+, 2025-09-27 21:01:00.667484  deposit to checking   Amount:  1000  New Balance: 3000 | osama
+, 2025-09-27 21:01:00.667779  transfer  checking   Amount:  30  New Balance: -65 from osama to: savings 
+2, 2025-09-27 21:23:16.691955  transfer  checking   Amount:  1000  New Balance: 0 from osama to: Sami alrehaili 
+2, 2025-09-27 21:23:31.829934  transfer  checking   Amount:  1000  New Balance: 1000 from osama to: ahmad khaled 
+2, 2025-09-27 21:24:13.731248  transfer  checking   Amount:  1000  New Balance: 1000 from osama to: ahmad khaled 
+2, 2025-09-27 21:25:35.442982  transfer  checking   Amount:  1000  New Balance: 1000 from osama to: ahmad khaled 
+3, 2025-09-27 21:26:06.060823  transfer  checking   Amount:  1000  New Balance: 0 from osama to: Sami alrehaili 
+2, 2025-09-27 21:29:58.442571  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:30:18.110001  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:30:44.484794  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:31:30.471695  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:31:42.502034  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:31:58.988750  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:31:58.989129  transfer  checking   Amount:  1000  New Balance: 1000 from osama to: ahmad khaled 
+2, 2025-09-27 21:32:36.723528  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 
+2, 2025-09-27 21:32:36.723938  transfer  checking   Amount:  1000  New Balance: 1000 from osama to: ahmad khaled 
+2, 2025-09-27 21:35:11.531534  transfer  saving   Amount:  1000  New Balance: 1000 from osama to: Sami alrehaili 

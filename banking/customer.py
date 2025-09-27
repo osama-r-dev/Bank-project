@@ -17,6 +17,9 @@ class Customer:
        
      def qualifyName(self,name):
         
+           if len(name) == 0:
+             raise InvalidCharacterException("Valid characters are only (a-z), (A-Z), _")
+                
 
            validChars = list("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_")
            if len(name) > 15:     
@@ -25,10 +28,10 @@ class Customer:
            else:
               nameChars = list(name)
               for char in nameChars:
-                   if char in validChars:
-                        continue
-                   else:
-                        raise InvalidCharacterException("Valid characters are only (a-z), (A-Z), _")
+                   if char not in validChars:
+                         raise InvalidCharacterException("Valid characters are only (a-z), (A-Z), _")
+                 
+                       
            return name
     
      

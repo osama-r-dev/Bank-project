@@ -42,6 +42,8 @@ class Bank:
 
 
   def transferToAnotherCustomer(self,customerName,senderAccount,senderAccountType,transferAmount,recipientID):
+         if senderAccount.id == int(recipientID):
+            raise ValueError("Invalild operation")
          if transferAmount is None or not isinstance(transferAmount,(int,float)) or transferAmount <= 0: 
                 raise ValueError("invalid amount")
          if senderAccountType == "checking":
@@ -107,7 +109,7 @@ class Bank:
      with open("banking/bank.csv","w",newline="") as file:
         listValues = ["account_id","frst_name","last_name","password","balance_checking","balance_savings"]
         writer = csv.DictWriter(file , fieldnames = listValues)
-        writer.writeheader()
+        # writer.writeheader()
         for customer in self.customers:
           dic = {
            "account_id": customer.account.id,

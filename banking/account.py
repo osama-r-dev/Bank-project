@@ -1,5 +1,5 @@
 
-
+import csv
 class NotEnoughMoneyException(Exception):
    pass
 class PasswordTooShort(Exception):
@@ -132,6 +132,18 @@ class Account:
                    if self.savingDraftCount >= 2:
                         self.savingsDeactivated = True  
                raise NotEnoughMoneyException("operation failed your account's balance can't have less than -100$")  
+
+
+     def updateTransactionsHistory(self,id,trnasaction):
+      try:
+         with open ("banking/transactions.csv","a", newline= '') as file:
+           writer = csv.writer(file)
+           transactionList = [id , str(trnasaction)]
+           writer.writerow(transactionList)
+           
+      except Exception:
+          print("File can't be written")
+
 
 
      def setID(self,id):

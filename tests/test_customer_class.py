@@ -33,7 +33,7 @@ class TestAccount(unittest.TestCase):
          
 
 
- 
+   # python -m unittest  tests.test_customer_class
            
            
 

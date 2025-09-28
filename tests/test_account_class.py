@@ -47,13 +47,9 @@ class TestAccountClass(unittest.TestCase):
         
 
     
-    # def test_withdraw_operation(self):
-    #     self.assertEqual(self.account1.withdraw("checking",1000,"osama").newBalance,2000)
-
-
-    # def test_transfer_to_different_accountType(self):
-    #     self.assertEqual(self.account3.transferToDifferentAccountType("checking",1000),[5000,4000])   
-    #     self.assertEqual(self.account3.transferToDifferentAccountType("saving",4000),[9000,0])     
+    
 
 
     
+# python -m  unittest tests.test_account_class
+  

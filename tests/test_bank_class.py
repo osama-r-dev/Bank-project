@@ -37,9 +37,4 @@ class TestBank(unittest.TestCase):
         self.assertEqual(self.bank1.login("1","3434343$r43").account.id,1)
 
 
-    # test amount
-    
-
-
-
-    #test invalid account type
+    #  python -m unittest tests.test_bank_class  

@@ -109,7 +109,6 @@ class Bank:
      with open("banking/bank.csv","w",newline="") as file:
         listValues = ["account_id","frst_name","last_name","password","balance_checking","balance_savings"]
         writer = csv.DictWriter(file , fieldnames = listValues)
-        # writer.writeheader()
         for customer in self.customers:
           dic = {
            "account_id": customer.account.id,
